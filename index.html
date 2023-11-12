@@ -33,12 +33,28 @@
   });
 
   /* display basemap tiles -- see others at https://leaflet-extras.github.io/leaflet-providers/preview/ */
-  var Stadia_AlidadeSmoothDark = L.tileLayer('https://tiles.stadiamaps.com/tiles/alidade_smooth_dark/{z}/{x}/{y}{r}.{ext}', {
-	minZoom: 0,
-	maxZoom: 20,
-	attribution: '&copy; <a href="https://www.stadiamaps.com/" target="_blank">Stadia Maps</a> &copy; <a href="https://openmaptiles.org/" target="_blank">OpenMapTiles</a> &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-	ext: 'png'
-});
+  L.tileLayer('https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png', {
+    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+    className: 'map-tiles'
+}).addTo(map);
+
+	/* Only the necessary CSS shown */
+
+:root {
+    --map-tiles-filter: brightness(0.6) invert(1) contrast(3) hue-rotate(200deg) saturate(0.3) brightness(0.7);
+}
+
+@media (prefers-color-scheme: dark) {
+    .map-tiles {
+        filter:var(--map-tiles-filter, none);
+	}
+}
+
+/** The non-dark mode map will be untouched since it's not styled. **/
+/**
+    Source: https://github.com/pkrasicki/issviewer
+    Discovered via: https://github.com/openstreetmap/openstreetmap-website/issues/2332
+**/  
 
   /* Display a point marker with pop-up text */
   L.marker([41.77, -72.69]).addTo(map) // EDIT marker coordinates
